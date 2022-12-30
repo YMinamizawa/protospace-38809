@@ -23,6 +23,7 @@ class PrototypesController < ApplicationController
     if @prototype.save
       redirect_to root_path
     else
+      @prototype = Prototype.new(prototype_params)
       render :new
     end
   end
@@ -32,12 +33,10 @@ class PrototypesController < ApplicationController
   end
 
   def update
-    prototype = Prototype.find(params[:id])
-    if prototype.update(prototype_params)
-      redirect_to prototype_path, method: :get
+    if @prototype.update(prototype_params)
+      redirect_to prototype_path(@prototype)
     else
-      @prototype = Prototype.find(params[:id])
-      render :edit   
+      render :edit
     end
   end
 
